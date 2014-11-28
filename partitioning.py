@@ -18,6 +18,29 @@ class Vertice:
     def getSaidas(self):
         return self.listaSaidas
 
+class Stack:
+    def __init__(self,elemento=None):
+        self.lista=[]
+        if elemento!=None:
+            self.lista.append(elemento)
+    def __repr__(self):
+        return self.lista
+    def __str__(self):
+        return str(self.lista)
+    def __len__(self):
+        return len(self.lista)
+    def __getitem__(self,k):
+        return self.lista[k]
+    def pop(self):
+        if len(self.lista)>0:
+            popped=self.lista[0]
+            self.lista=self.lista[1:]
+        else:
+            popped=None
+        return popped
+    def add(self,elemento):
+        self.lista=[elemento]+ self.lista
+
 def conectaOneWay(VA,VB):
     VA.addSaida(VB)
     VB.addEntrada(VA)
@@ -26,7 +49,21 @@ def conectaTwoWay(VA,VB):
     conectaOneWay(VA,VB)
     conectaOneWay(VB,VA)
 
-def SW(inicio):
+def DFS(inicio):
+    S=Stack(inicio)
+    visitados=[inicio]
+    while len(S)>0:
+        popped=S.pop()
+        chd=popped.getSaidas()
+        for e in chd:
+            if e not in visitados:
+                S.add(e)
+                visitados.append(e)
+    print visitados
+        
+
+
+#def SW(inicio):
     
 
 
@@ -61,3 +98,5 @@ conectaOneWay(I,J)
 conectaOneWay(J,K)
 conectaOneWay(H,C)
 
+DFS(A)
+DFS(F)
